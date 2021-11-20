@@ -1,0 +1,19 @@
+{
+  "name": "policyserver",
+  "version": "1.0.0",
+  "description": "A REST API that will serve up the data from SQL Server to our web application to visualize the data",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Sriteja R Chilakapati",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^7.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
