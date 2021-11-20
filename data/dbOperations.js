@@ -20,7 +20,8 @@ const getPoliciesByPolicyId = async (policyId) => {
     return policiesList.recordset;
   }
   catch(err) {
-    return err.message;
+    err.status = 500;
+    throw err;
   }
 }
 
@@ -37,7 +38,8 @@ const getPoliciesByCustomerId = async (customerId) => {
     return policiesList.recordset;
   }
   catch(err) {
-    return err.message;
+    err.status = 500;
+    throw err;
   }
 }
 
@@ -54,7 +56,8 @@ const getPoliciesByRegion = async (region) => {
     return policiesList.recordset;
   }
   catch(err) {
-    return err.message;
+    err.status = 500;
+    throw err;
   }
 }
 
@@ -69,7 +72,8 @@ const updatePremium = async (policyId, premium) => {
     return await getPoliciesByPolicyId(policyId);
   }
   catch(err) {
-    return err.message;
+    err.status = 500;
+    throw err;
   }
 }
 
