@@ -1,9 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
 const config = require('./config');
 const policyRouter = require('./routes/policyRouter');
 
+app.use(cors());
 app.use(morgan('dev'));
 
 app.use(express.json());
