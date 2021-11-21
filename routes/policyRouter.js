@@ -35,7 +35,6 @@ policyRouter.route('/policy/:filter')
 })
 .put(async (req, res) => {
   try {
-    console.log(req.body);
     let policyId = parseInt(req.params.filter);
     let premium = parseInt(req.body.premium);
     if (isNaN(premium)) {
