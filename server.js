@@ -22,6 +22,10 @@ app.use((req, res, next) => {
 
 app.use('/api', policyRouter);
 
+app.get('/', (req, res) => {
+  res.send('Server is running successfully!');
+})
+
 app.listen(config.port, () => {
   console.log(`Server is listening on ${config.url}`);
 });
