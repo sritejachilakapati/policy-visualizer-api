@@ -14,6 +14,7 @@ module.exports = {
     user: SQL_USER,
     password: SQL_PASSWORD,
     database: SQL_DATABASE,
+    connectionTimeout: 120000,
     requestTimeout: 120000,
     pool: {
       max: 10,
