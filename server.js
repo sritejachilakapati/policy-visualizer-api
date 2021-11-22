@@ -26,6 +26,9 @@ app.get('/', (req, res) => {
   res.send('Server is running successfully!');
 })
 
-app.listen(config.port, () => {
-  console.log(`Server is listening on ${config.url}`);
-});
+const server = app.listen(process.env.PORT || 3000, () => {
+  const host = server.address().address
+  const port = server.address().port
+
+  console.log(`Server listening at https://${host}:${port}`)
+})
