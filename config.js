@@ -1,7 +1,7 @@
 require('dotenv').config();
 const sql = require('mssql');
 
-const {PORT, HOST, HOST_URL, SQL_USER, SQL_PASSWORD, SQL_DATABASE, SQL_SERVER} = process.env;
+const {SQL_USER, SQL_PASSWORD, SQL_DATABASE, SQL_SERVER} = process.env;
 const sqlEncrypt = process.env.SQL_ENCRYPT === 'true';
 const sqlPort = parseInt(process.env.SQL_PORT);
 
@@ -24,13 +24,12 @@ const sqlConfig = {
   },
 }
 
+console.log(sqlConfig);
+
 const poolPromise = new sql.ConnectionPool(sqlConfig).connect()
                            .then(pool => (pool))
                           .catch(err => {throw err;})
 
 module.exports = {
-  port: PORT,
-  host: HOST,
-  url: HOST_URL,
   poolPromise: poolPromise
 };
