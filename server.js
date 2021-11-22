@@ -11,6 +11,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use((req, res, next) => {
+  res.setTimeout(120000, () => {
+      console.log('Request has timed out.');
+          res.send(408);
+      });
+
+  next();
+});
+
 app.use('/api', policyRouter);
 
 app.listen(config.port, () => {

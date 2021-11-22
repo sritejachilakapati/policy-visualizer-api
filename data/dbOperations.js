@@ -57,6 +57,7 @@ const getPoliciesByRegion = async (region) => {
   }
   catch(err) {
     err.status = 500;
+    console.log(err);
     throw err;
   }
 }

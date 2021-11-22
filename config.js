@@ -14,9 +14,15 @@ module.exports = {
     user: SQL_USER,
     password: SQL_PASSWORD,
     database: SQL_DATABASE,
+    requestTimeout: 120000,
+    pool: {
+      max: 10,
+      min: 0,
+      idleTimeoutMillis: 30000
+    },
     options: {
       encrypt: sqlEncrypt,
-      enableArithAbort: true
+      enableArithAbort: true,
     },
   },
 };
