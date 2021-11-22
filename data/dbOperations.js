@@ -7,16 +7,6 @@ const queries = {
   updatePremium: require('./queries/updatePremium')
 }
 
-const testConnection = async () => {
-  try {
-    let pool = await poolPromise;
-    return pool;
-  }
-  catch(err) {
-    return {type: 'db', err: err};
-  }
-}
-
 const getPoliciesByPolicyId = async (policyId) => {
   try {
     let pool = await poolPromise;
@@ -91,6 +81,5 @@ module.exports = {
   getPoliciesByPolicyId,
   getPoliciesByCustomerId,
   getPoliciesByRegion,
-  updatePremium,
-  testConnection
+  updatePremium
 }
