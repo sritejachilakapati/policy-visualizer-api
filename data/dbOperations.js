@@ -1,4 +1,5 @@
 const { poolPromise } = require('../config');
+const sql = require('mssql');
 const queries = {
   getByPolicyId: require('./queries/getByPolicyId'),
   getByCustomerId: require('./queries/getByCustomerId'),
