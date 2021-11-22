@@ -1,5 +1,4 @@
-const config = require('../config');
-const sql = require('mssql');
+const { poolPromise } = require('../config');
 const queries = {
   getByPolicyId: require('./queries/getByPolicyId'),
   getByCustomerId: require('./queries/getByCustomerId'),
@@ -9,7 +8,7 @@ const queries = {
 
 const testConnection = async () => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     return pool;
   }
   catch(err) {
@@ -19,7 +18,7 @@ const testConnection = async () => {
 
 const getPoliciesByPolicyId = async (policyId) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     let policiesList = await pool.request()
                              .input('policyId', sql.Int, policyId)
                              .query(queries.getByPolicyId);
@@ -37,7 +36,7 @@ const getPoliciesByPolicyId = async (policyId) => {
 
 const getPoliciesByCustomerId = async (customerId) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     let policiesList = await pool.request()
                              .input('customerId', sql.Int, customerId)
                              .query(queries.getByCustomerId);
@@ -55,7 +54,7 @@ const getPoliciesByCustomerId = async (customerId) => {
 
 const getPoliciesByRegion = async (region) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     let policiesList = await pool.request()
                              .input('region', sql.VarChar(10), region)
                              .query(queries.getByRegion);
@@ -74,7 +73,7 @@ const getPoliciesByRegion = async (region) => {
 
 const updatePremium = async (policyId, premium) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     await pool.request()
           .input('premium', sql.Int, premium*100)
           .input('policyId', sql.Int, policyId)
