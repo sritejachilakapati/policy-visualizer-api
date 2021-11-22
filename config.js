@@ -24,8 +24,6 @@ const sqlConfig = {
   },
 }
 
-console.log(sqlConfig);
-
 const poolPromise = new sql.ConnectionPool(sqlConfig).connect()
                            .then(pool => (pool))
                           .catch(err => {throw err;})

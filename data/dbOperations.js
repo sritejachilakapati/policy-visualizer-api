@@ -56,18 +56,17 @@ const getPoliciesByCustomerId = async (customerId) => {
 const getPoliciesByRegion = async (region) => {
   try {
     let pool = await poolPromise;
-    let policiesList = await pool.request()
+    let policyData = await pool.request()
                              .input('region', sql.VarChar(10), region)
                              .query(queries.getByRegion);
-    
-    policiesList.recordset.forEach(policy => {
-      policy.PREMIUM = policy.PREMIUM / 100;
-    });
-    return policiesList.recordset;
+    let policyCount = new Array(12).fill(0);
+    policyData.recordset.forEach(record => {
+      policyCount[record.MONTH - 1] = record.COUNT;
+    })
+    return policyCount;
   }
   catch(err) {
     err.status = 500;
-    console.log(err);
     throw err;
   }
 }

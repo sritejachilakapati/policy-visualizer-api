@@ -2,17 +2,6 @@ const express = require('express');
 const dbOperations = require('../data/dbOperations');
 const policyRouter = express.Router();
 
-policyRouter.route('/testdb')
-.get(async (req, res) => {
-  try {
-    let result = await dbOperations.testConnection()
-    res.json(result);
-  }
-  catch (err) {
-    res.json({type: 'express', err: err});
-  }
-})
-
 policyRouter.route('/policy/:filter')
 .get(async (req, res) => {
   try {
