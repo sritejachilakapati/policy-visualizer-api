@@ -1,4 +1,4 @@
-const config = require('../config');
+const { poolPromise } = require('../config');
 const sql = require('mssql');
 const queries = {
   getByPolicyId: require('./queries/getByPolicyId'),
@@ -7,9 +7,19 @@ const queries = {
   updatePremium: require('./queries/updatePremium')
 }
 
+const testConnection = async () => {
+  try {
+    let pool = await poolPromise;
+    return pool;
+  }
+  catch(err) {
+    return {type: 'db', err: err};
+  }
+}
+
 const getPoliciesByPolicyId = async (policyId) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     let policiesList = await pool.request()
                              .input('policyId', sql.Int, policyId)
                              .query(queries.getByPolicyId);
@@ -27,7 +37,7 @@ const getPoliciesByPolicyId = async (policyId) => {
 
 const getPoliciesByCustomerId = async (customerId) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     let policiesList = await pool.request()
                              .input('customerId', sql.Int, customerId)
                              .query(queries.getByCustomerId);
@@ -45,26 +55,25 @@ const getPoliciesByCustomerId = async (customerId) => {
 
 const getPoliciesByRegion = async (region) => {
   try {
-    let pool = await sql.connect(config.sql);
-    let policiesList = await pool.request()
+    let pool = await poolPromise;
+    let policyData = await pool.request()
                              .input('region', sql.VarChar(10), region)
                              .query(queries.getByRegion);
-    
-    policiesList.recordset.forEach(policy => {
-      policy.PREMIUM = policy.PREMIUM / 100;
-    });
-    return policiesList.recordset;
+    let policyCount = new Array(12).fill(0);
+    policyData.recordset.forEach(record => {
+      policyCount[record.MONTH - 1] = record.COUNT;
+    })
+    return policyCount;
   }
   catch(err) {
     err.status = 500;
-    console.log(err);
     throw err;
   }
 }
 
 const updatePremium = async (policyId, premium) => {
   try {
-    let pool = await sql.connect(config.sql);
+    let pool = await poolPromise;
     await pool.request()
           .input('premium', sql.Int, premium*100)
           .input('policyId', sql.Int, policyId)
@@ -82,5 +91,6 @@ module.exports = {
   getPoliciesByPolicyId,
   getPoliciesByCustomerId,
   getPoliciesByRegion,
-  updatePremium
+  updatePremium,
+  testConnection
 }
